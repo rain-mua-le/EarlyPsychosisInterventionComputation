@@ -18,6 +18,7 @@ if os.path.isFile("results.p"):
 else:
     results = {"one": [], "two": [], "three": [], "four": [], "five": [], "six": [], "seven": [], "eight": [], "nine": []}
 
+#Survey
 print("Please rate how much you agree with the following statements with 1 being strongly disagree and 5 being strongly agree.")
 print("-------------------------------------------------------------------")
 print("I had felt down or depressed consistently in the last week.")
@@ -38,3 +39,20 @@ print("I had trouble maintaining daily living tasks over the last week.")
 results["eight"].append(getInput())
 print("I had thoughts that my thoughts are being controlled in the last week.")
 results["nine"].append(getInput())
+
+#Save results to file
+pickleFile = open("results.p", "wb")
+pickle.dump(results, pickleFile)
+
+#Create prolog program
+prologProgram = open("main.pro", "w")
+prologProgram.write("#include track.pro\n")
+for key, value in results.items():
+    string = ""
+    for elements in value:
+        string += str(elements) + ","
+    prologProgram.write(key + "([" + string[: -1] + "])."
+prologProgram.write("?-healthy")
+prologProgram.write("?-prodromal")
+prologProgram.write("?-acute")
+prologProgram.write("?-recovery")
