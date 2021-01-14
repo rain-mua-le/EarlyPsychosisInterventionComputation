@@ -13,8 +13,10 @@ def getInput():
         num = input("Invalid rating. Please try again (1-5): ")
     return num
 
-if os.path.isFile("results.p"):
-    results = pickle.load("results.p", "rb")
+if os.path.isfile("results.p"):
+    infile = open("results.p", "rb")
+    results = pickle.load(infile)
+    infile.close()
 else:
     results = {"one": [], "two": [], "three": [], "four": [], "five": [], "six": [], "seven": [], "eight": [], "nine": []}
 
@@ -41,18 +43,19 @@ print("I had thoughts that my thoughts are being controlled in the last week.")
 results["nine"].append(getInput())
 
 #Save results to file
-pickleFile = open("results.p", "wb")
-pickle.dump(results, pickleFile)
+outfile = open("results.p", "wb")
+pickle.dump(results, outfile)
+outfile.close()
 
 #Create prolog program
-prologProgram = open("main.pro", "w")
-prologProgram.write("#include track.pro\n")
+prologProgram = open("main.pl", "w")
+prologProgram.write("#include track.pl\n")
 for key, value in results.items():
     string = ""
     for elements in value:
         string += str(elements) + ","
-    prologProgram.write(key + "([" + string[: -1] + "])."
-prologProgram.write("?-healthy")
-prologProgram.write("?-prodromal")
-prologProgram.write("?-acute")
-prologProgram.write("?-recovery")
+    prologProgram.write(key + "([" + string[: -1] + "]).\n")
+prologProgram.write("?-healthy\n")
+prologProgram.write("?-prodromal\n")
+prologProgram.write("?-acute\n")
+prologProgram.write("?-recovery\n")
