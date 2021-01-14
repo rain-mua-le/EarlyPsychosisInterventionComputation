@@ -48,14 +48,9 @@ pickle.dump(results, outfile)
 outfile.close()
 
 #Create prolog program
-prologProgram = open("main.pl", "w")
-prologProgram.write("#include track.pl\n")
+prologProgram = open("list.pl", "w")
 for key, value in results.items():
     string = ""
     for elements in value:
         string += str(elements) + ","
     prologProgram.write(key + "([" + string[: -1] + "]).\n")
-prologProgram.write("?-healthy\n")
-prologProgram.write("?-prodromal\n")
-prologProgram.write("?-acute\n")
-prologProgram.write("?-recovery\n")
