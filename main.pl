@@ -20,39 +20,69 @@ add([H|T], Sum) :- add(T, X), Sum is X + H.
 mean(List, N, Average) :- get_weeks(List, N, LastN), add(LastN, Sum), Average is Sum / N.
 
 %calculate mean and ranges for all questions over a two and four week period
-two_week_mean_1(A) :- mean(one, 2, A).
-two_week_range_1(B) :- range(one, 2, B).
-four_week_mean_1(C) :- mean(one, 4, C).
-four_week_range_1(D) :- range(one, 4, D).
-two_week_mean_2(E) :- mean(two, 2, E).
-two_week_range_2(F) :- range(two, 2, F).
-four_week_mean_2(G) :- mean(two, 4, G).
-four_week_range_2(H) :- range(two, 4, H).
-two_week_mean_3(I) :- mean(three, 2, I).
-two_week_range_3(J) :- range(three, 2, J).
-four_week_mean_3(K) :- mean(three, 4, K).
-four_week_range_3(L) :- range(three, 4, L).
-two_week_mean_4(M) :- mean(four, 2, M).
-two_week_range_4(N) :- range(four, 2, N).
-four_week_mean_4(O) :- mean(four, 4, O).
-four_week_range_4(P) :- range(four, 4, P).
-two_week_mean_5(Q) :- mean(five, 2, Q).
-two_week_range_5(R) :- range(five, 2, R).
-four_week_mean_5(S) :- mean(five, 4, S).
-four_week_range_5(T) :- range(five, 4, T).  
-two_week_mean_6(U) :- mean(six, 2, U).
-two_week_range_6(V) :- range(six, 2, V).
-four_week_mean_6(W) :- mean(six, 4, W).
-four_week_range_6(X) :- range(six, 4, X).
-two_week_mean_7(Y) :- mean(seven, 2, Y).
-two_week_range_7(Z) :- range(seven, 2, Z).
-four_week_mean_7(AA) :- mean(seven, 4, AA).
-four_week_range_7(AB) :- range(seven, 4, AB).
-two_week_mean_8(AC) :- mean(eight, 2, AC).
-two_week_range_8(AD) :- range(eight, 2, AD).
-four_week_mean_8(AE) :- mean(eight, 4, AE).
-four_week_range_8(AF) :- range(eight, 4, AF).
-two_week_mean_9(AG) :- mean(nine, 2, AG).
-two_week_range_9(AH) :- range(nine, 2, AH).
-four_week_mean_9(AI) :- mean(nine, 4, AI).
-four_week_range_9(AJ) :- range(nine, 4, AJ).
+two_week_mean_1(X) :- length(one, Y) >= 2, mean(one, 2, X).
+two_week_range_1(X) :- length(one, Y) >= 2, range(one, 2, X).
+four_week_mean_1(X) :- length(one, Y) >= 4, mean(one, 4, X).
+two_week_mean_2(X) :- length(two, Y) >= 2, mean(two, 2, X).
+two_week_range_2(X) :- length(two, Y) >= 2, range(two, 2, X).
+four_week_mean_2(X) :- length(two, Y) >= 4, mean(two, 4, X).
+two_week_mean_3(X) :- length(three, Y) >= 2, mean(three, 2, X).
+two_week_range_3(X) :- length(three, Y) >= 2, range(three, 2, X).
+four_week_mean_3(X) :- length(three, Y) >= 4, mean(three, 4, X).
+two_week_mean_4(X) :- length(four, Y) >= 2, mean(four, 2, X).
+two_week_range_4(X) :- length(four, Y) >= 2, range(four, 2, X).
+four_week_mean_4(X) :- length(four, Y) >= 4, mean(four, 4, X).
+two_week_mean_5(X) :- length(five, Y) >= 2, mean(five, 2, X).
+two_week_range_5(X) :- length(five, Y) >= 2, range(five, 2, X).
+four_week_mean_5(X) :- length(five, Y) >= 4, mean(five, 4, X).
+two_week_mean_6(X) :- length(six, Y) >= 2, mean(six, 2, X).
+two_week_range_6(X) :- length(six, Y) >= 2, range(six, 2, X).
+four_week_mean_6(X) :- length(six, Y) >= 4, mean(six, 4, X).
+two_week_mean_7(X) :- length(seven, Y) >= 2, mean(seven, 2, X).
+two_week_range_7(X) :- length(seven, Y) >= 2, range(seven, 2, X).
+four_week_mean_7(X) :- length(seven, Y) >= 4, mean(seven, 4, X).
+two_week_mean_8(X) :- length(eight, Y) >= 2, mean(eight, 2, X).
+two_week_range_8(X) :- length(eight, Y) >= 2, range(eight, 2, X).
+four_week_mean_8(X) :- length(eight, Y) >= 4, mean(eight, 4, X).
+two_week_mean_9(X) :- length(nine, Y) >= 2, mean(nine, 2, X).
+two_week_range_9(X) :- length(nine, Y) >= 2, range(nine, 2, X).
+four_week_mean_9(X) :- length(nine, Y) >= 4, mean(nine, 4, X).
+
+%rule to determine if there is a healthy trend of no symptoms over the past four weeks
+healthy_trend :- four_week_mean_1(0), four_week_mean_2(0), four_week_mean_3(0), four_week_mean_4(0), four_week_mean_5(0), four_week_mean_6(0), four_week_mean_7(0), four_week_mean_8(0), four_week_mean_9(0).
+
+%rule to determine if person is healthy at the moment (has no symptoms the current week)
+healthy_atm :- last_element(one, 0), last_element(two, 0), last_element(three, 0), last_element(four, 0), last_element(five, 0), last_element(six, 0), last_element(seven, 0), last_element(eight, 0), last_element(nine, 0).
+
+%rule to determine if person is experiencing prodromal symptoms consistently over the last two weeks
+experiencing_prodromal_symptoms_trend :- two_week_mean_1(A) > 1, two_week_mean_2(B) > 1, two_week_mean_3(C) > 1, two_week_mean_4(D) > 1, two_week_mean_5(E) > 1, two_week_mean_6(F) > 1, two_week_mean_8(G) > 1.
+
+%rule to determine if person is experiencing prodromal symptoms at the moment in the current week
+experiencing_prodromal_symptoms_atm :- last_element(one, A) > 1, last_element(two, B) > 1, last_element(three, C) > 1, last_element(four, D) > 1, last_element(five, E) > 1, last_element(six, F) > 1, last_element(eight, G) > 1.
+
+%rule to determine if person is experiencing positive symptoms consistently over the last two weeks
+positive_symptoms_trend :- two_week_mean_7(A) > 1, two_week_mean_9(B) > 1.
+
+%rule to determine if person is experiencing positive symptoms at the moment
+positive_symptoms_atm :- last_element(seven, A) > 1, last_element(nine, B) > 1.
+
+%rule to determine if the person is experiencing a decrease in symptoms
+decrease_symptoms :- two_week_range_1(A) < 0, two_week_range_2(B) < 0, two_week_range_3(C) < 0, two_week_range_4(D) < 0, two_week_range_5(E) < 0, two_week_range_6(F) < 0, two_week_range_7(G) < 0, two_week_range_8(H) < 0, two_week_range_9(I) < 0.
+
+%rule to determine if person is in healthy phase
+healthy :- healthy_trend; healthy_atm.
+
+%rule to determine if person is in prodromal phase
+prodromal :- experiencing_prodromal_symptoms_trend; experiencing_prodromal_symptoms_atm, not positive_symptoms_trend, not positive_symptoms_atm.
+
+%rule to determine if person is in acute phase
+acute :- positive_symptoms_trend; positive_symptoms_atm.
+
+%rule to determine if person is in recovery phase
+recovery :- experiencing_prodromal_symptoms_trend; experiencing prodromal_symptoms_atm, positive_symptoms_trend; positive_symptoms_atm, decrease_symptoms.
+
+%queries
+?- healthy
+?- prodromal
+?- acute
+?- recovery
