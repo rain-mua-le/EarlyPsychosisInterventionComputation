@@ -8,8 +8,8 @@ def getInput():
     This function receives the user's input and bound checks it
     """
 
-    num = input("Type in a rating (1-5) and press ENTER: ")
-    while num < 0 and num > 5:
+    num = int(input("Type in a rating (1-5) and press ENTER: "))
+    while num < 1 or num > 5:
         num = input("Invalid rating. Please try again (1-5): ")
     return num
 
@@ -54,3 +54,13 @@ for key, value in results.items():
     for elements in value:
         string += str(elements) + ","
     prologProgram.write(key + "([" + string[: -1] + "]).\n")
+    if len(value) >= 2:
+        string = ""
+        for elements in value[-2 :]:
+            string += str(elements) + ","
+        prologProgram.write(key + "_2([" + string[: -1] + "]).\n")
+    if len(value) >= 4:
+        string = ""
+        for elements in value[-4 :]:
+            string+= str(elements) + ","
+        prologProgram.write(key + "_4([" + string[: -1] + "]).\n")
