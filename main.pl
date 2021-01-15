@@ -88,4 +88,4 @@ recovery :- experiencing_prodromal_symptoms_trend, positive_symptoms_trend, decr
 %?- healthy.
 %?- prodromal.
 %?- acute.
-?- recovery.
+%?- recovery.
